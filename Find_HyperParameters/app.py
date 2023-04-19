@@ -7,38 +7,6 @@ import Globals
 import loss_functions as loss
 import pandas as pd
 
-# # Problem Definition
-# problem = structure()
-# problem.costfunc = [loss.l2_loss, loss.l1_loss]
-# problem.nvar = 8
-# problem.varmin = Globals.medium_varmin
-# problem.varmax = Globals.medium_varmax
-# problem.update_vec = Globals.easy_gamma
-# problem.batch_size = [64, 128, 1024]
-
-# # GA Parameters
-# params = structure()
-# params.maxit = [100, 200, 400]
-# params.npop = [50, 100, 150]
-# params.beta = [0.6, 0.8, 1]
-# params.pc = [1 , 2, 3]
-# params.mu = [0.1, 0.2, 0.4]
-# params.sigma = [Globals.easy_sigma, Globals.medium_sigma, Globals.extreme_sigma]
-
-# # Run GA
-# out = ga.run(problem, params)
-# print(out.bestsol)
-
-# # Results
-# plt.plot(out.bestcost)
-# plt.xlim(0, params.maxit)
-# plt.xlabel('Iterations')
-# plt.ylabel('Best Cost')
-# plt.title('Genetic Algorithm (GA)')
-# plt.grid(True)
-# plt.show()
-
-
 costfuncs = [loss.l2_loss, loss.l1_loss]
 batch_sizes = [512, 1024]
 maxits = [1000]

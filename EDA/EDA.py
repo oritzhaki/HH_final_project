@@ -1,35 +1,22 @@
 import pandas as pd
-
-data = pd.read_csv('Prod/dataset.csv', header=None, names=['time', 'voltage', 'conductivity'])
-
-
-print(data.shape)       # print the number of rows and columns in the dataframe
-print(data.columns)     # print the names of the columns
-print(data.dtypes)      # print the data types of the columns
-
-
-print(data.isna().sum())   # print the number of missing values in each column
-
-
-print(data.describe())   # calculate summary statistics for each numeric column
-
-
+import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
-VOLTS = [-90, -80, -70, -60, -50, -40, -30, -20, -10]
+# load the data
+data = pd.read_csv('Prod/dataset.csv', names=['time', 'voltage', 'conductivity'])
 
-# plot the conductivity vs. time for each voltage level
-fig, axs = plt.subplots(3, 3, figsize=(10, 10))
-for i, ax in enumerate(axs.flatten()):
-    df = data[data['voltage'] == VOLTS[i]]
-    ax.plot(df['time'], df['conductivity'])
-    ax.set_title(f'Voltage = {VOLTS[i]} mV')
-plt.tight_layout()
-plt.show()
+# display the first 5 rows of the data
+print(data.head())
 
-# plot the mean conductivity vs. time for all voltage levels
-mean_conductivity = data.groupby('time')['conductivity'].mean()
-plt.plot(mean_conductivity.index, mean_conductivity)
-plt.xlabel('Time (ms)')
-plt.ylabel('Mean Conductivity')
+# check the data types and missing values
+print(data.info())
+
+# summary statistics
+print(data.describe())
+
+# plot the conductivity distribution
+sns.histplot(data['conductivity'])
+plt.xlabel('Conductivity')
+plt.title('Conductivity Distribution')
 plt.show()

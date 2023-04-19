@@ -25,11 +25,10 @@ def n_pow_4(n, params):
     return result_n
 
 def get_y_hat(params, ti, Vi):
-    epsilon = 0.0001
     alpha = alpha_n(Vi, params[:4])
     beta = beta_n(Vi, params[4:7])
     n_inf_ = n_inf(alpha, beta)
     tau_n_ = tau_n(alpha, beta)
-    n = n_inf_ * (1 - np.exp((-ti + epsilon) / tau_n_))
+    n = n_inf_ * (1 - np.exp((-ti) / tau_n_))
     y_hat = n_pow_4(n, params[-1])
     return y_hat
