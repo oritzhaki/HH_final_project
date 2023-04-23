@@ -14,14 +14,14 @@ problem.nvar = 8
 problem.varmin = Globals.medium_varmin
 problem.varmax = Globals.medium_varmax
 problem.update_vec = Globals.medium_gamma
-problem.batch_size = 64
+problem.batch_size = 1800
 problem.params_to_optimize = { "c1" : True,
                                "c2" : True,
                                "c3" : True,
                                "c4" : True,
-                               "c5" : False,
-                               "c6" : False,
-                               "c7" : False,
+                               "c5" : True,
+                               "c6" : True,
+                               "c7" : True,
                                "c8" : False
                               }
 

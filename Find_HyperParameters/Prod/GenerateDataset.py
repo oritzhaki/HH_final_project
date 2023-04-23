@@ -28,7 +28,7 @@ def get_y(t, V):
     n_inf_ = n_inf(alpha, beta)
     tau_n_ = tau_n(alpha, beta)
     n = n_inf_ * (1 - np.exp(-t/tau_n_))
-    y_hat = n_pow_4(n)
+    y_hat = n_pow_4(n) 
     return y_hat
 
 
@@ -54,6 +54,7 @@ print(dataset_df)
 graph_df.plot()
 plt.legend(np.arange(-90, 90, 10))
 plt.xlabel("Time (ms)")
+plt.ylabel("Conductivity (G)")
 plt.show()
 
 # graph_df.to_csv('Prod/graph_df.csv', index=False)

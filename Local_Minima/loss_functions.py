@@ -3,8 +3,11 @@ import HH_Equations as Equations
 import random
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
-
+import os
 def get_data(path):
+    # print(os.getcwd())
+    # os.chdir('C:\\Users\\galle\\OneDrive\\Desktop\\Directories\\Study\\ShanaC\\Project\\Git_HH\\Local_Minima')
+    # print(os.getcwd())
     data = pd.read_csv(path)
     inputs = data.iloc[:, :-1]
     t, V = inputs

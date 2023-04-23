@@ -3,6 +3,8 @@ import HH_Equations as Equations
 import random
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
+import torch
+
 
 def get_data(path):
     data = pd.read_csv(path)
@@ -21,6 +23,7 @@ def get_scaled_data(path):
     inputs = data_standardized[:, :-1]
     labels = data_standardized[:, -1]
     t = inputs[:, :-1]
+    t = np.arange(t.shape[0]) 
     V = inputs[:, -1]
     return t, V, labels
 
