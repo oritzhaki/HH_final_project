@@ -25,7 +25,6 @@ def n_pow_4(n, params):
     return result_n
 
 def get_y_hat(params, ti, Vi):
-    epsilon = 0.0001
     alpha = alpha_n(Vi, params[:4])
     beta = beta_n(Vi, params[4:7])
     n_inf_ = n_inf(alpha, beta)

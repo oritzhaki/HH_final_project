@@ -9,12 +9,12 @@ import pandas as pd
 
 # Problem Definition
 problem = structure()
-problem.costfunc = loss.l2_loss
+problem.costfunc = loss.logcosh_loss
 problem.nvar = 8
 problem.varmin = Globals.medium_varmin
 problem.varmax = Globals.medium_varmax
 problem.update_vec = Globals.medium_gamma
-problem.batch_size = 1800
+problem.batch_size = 900
 problem.params_to_optimize = { "c1" : True,
                                "c2" : True,
                                "c3" : True,

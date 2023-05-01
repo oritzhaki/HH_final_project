@@ -54,3 +54,15 @@ def l1_loss(params, batchSize):
     if loss == float("inf") or np.isnan(loss): loss = np.random.uniform(1,2) * 1000
     ret_loss = loss / len(indices)
     return ret_loss
+
+def logcosh_loss(params, batchSize):
+    loss = 0
+    indices = random.sample(range(len(t)), batchSize)
+    for i in indices:
+        y_hat = np.round(Equations.get_y_hat(params, t[i], V[i]), 8)
+        if y_hat == float("inf") or np.isnan(y_hat):
+            y_hat = np.random.uniform(1, 2) * 100
+        loss += np.log(np.cosh(y_hat - labels[i]))
+    if loss == float("inf") or np.isnan(loss): loss = np.random.uniform(1, 2) * 1000
+    ret_loss = loss / len(indices)  # the average of all t, V's checked
+    return ret_loss
