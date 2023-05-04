@@ -5,7 +5,6 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import torch
 
-
 def get_data(path):
     data = pd.read_csv(path)
     inputs = data.iloc[:, :-1]
@@ -27,12 +26,22 @@ def get_scaled_data(path):
     V = inputs[:, -1]
     return t, V, labels
 
-t, V, labels = get_data('Prod/dataset.csv')
+t, V, labels = get_data('../GeneratedData/NewApproach/dataset.csv')
 
+
+def get_batch_indices(batchSize):
+    indices = []
+    for i in range(0, len(t), 100):
+        indices += list(range(i, i+20))
+    
+    remaining_indices = set(range(len(t))) - set(indices)
+    random_indices = random.sample(remaining_indices, batchSize)
+    indices += random_indices
+    return indices
 
 def l2_loss(params, batchSize):
     loss = 0
-    indices = random.sample(range(len(t)), batchSize)
+    indices = get_batch_indices(batchSize)
     for i in indices:
         y_hat = np.round(Equations.get_y_hat(params, t[i], V[i]), 8)
         if y_hat == float("inf") or np.isnan(y_hat):
@@ -45,7 +54,7 @@ def l2_loss(params, batchSize):
 
 def l1_loss(params, batchSize):
     loss = 0
-    indices = random.sample(range(len(t)), batchSize)
+    indices = get_batch_indices(batchSize)
     for i in indices:
         y_hat = np.round(Equations.get_y_hat(params, t[i], V[i]), 8)
         if y_hat == float("inf") or np.isnan(y_hat):
@@ -57,7 +66,7 @@ def l1_loss(params, batchSize):
 
 def logcosh_loss(params, batchSize):
     loss = 0
-    indices = random.sample(range(len(t)), batchSize)
+    indices = get_batch_indices(batchSize)
     for i in indices:
         y_hat = np.round(Equations.get_y_hat(params, t[i], V[i]), 8)
         if y_hat == float("inf") or np.isnan(y_hat):

@@ -36,7 +36,10 @@ for temp_dir in os.listdir(data_dir):
             df = pd.read_csv(csv_file_path)
             df = df.applymap(lambda x: 0 if x < 0 else x)
             # Remove the first and last 1000 rows
-            df = df.iloc[980:-5000]
+            df = df.iloc[980:-5009]
+            
+            df = df[~((df.index % 10 != 0))]
+            print(df.shape)
 
             # Add the column names to the data
             col_names = ["-90"]

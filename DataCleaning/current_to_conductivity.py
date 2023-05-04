@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import butter, filtfilt
 
-os.chdir('C:\\Users\\galle\\OneDrive\\Desktop\\Directories\\Study\\ShanaC\\Project\\DataCleaning')
+os.chdir('C:\\Users\\galle\\OneDrive\\Desktop\\Directories\\Study\\ShanaC\\Project\\Git_HH\\DataCleaning')
 
-CHOSEN_ROW = 900
+CHOSEN_ROW = 70
 VOLT_ARR = [-80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50, 60 ,70, 80, 90]
 
 
@@ -121,8 +121,8 @@ for temp_dir in os.listdir(data_dir):
         conductivity_df = conductivity_df.drop(conductivity_df.columns[0], axis=1)
         high_value = generate_high_value(conductivity_df)
         conductivity_df = create_cunductivity_dF_normalize_by_high_value(conductivity_df, high_value)
-        clean_conductivity_df = apply_low_pass_filter(conductivity_df, 10, 100)
-        clean_conductivity_df = clean_conductivity_df.applymap(lambda x: 0 if x < 0 else x)
+        #clean_conductivity_df = apply_low_pass_filter(conductivity_df, 10, 100)
+        clean_conductivity_df = conductivity_df.applymap(lambda x: 0 if x < 0 else x)
         
         get_prediction(clean_conductivity_df, csv_file)
         

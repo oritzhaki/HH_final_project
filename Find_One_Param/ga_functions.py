@@ -1,14 +1,16 @@
 import numpy as np
 import Globals
+import random
 
 def crossover(p1, p2, update_vec):
     c1 = p1.deepcopy()
     c2 = p1.deepcopy()
-    alpha = [np.random.uniform(low, high) for (low, high) in update_vec]
-    alpha = np.array(alpha)
-    c1.position = alpha*p1.position + (1-alpha)*p2.position
-    c2.position = alpha*p2.position + (1-alpha)*p1.position
+    alpha = [random.choice(update_vec) for _ in range(len(p1.position))]
+    for i in range(len(p1.position)):
+        c1.position[i] = alpha[i]*p1.position[i] + (1-alpha[i])*p2.position[i]
+        c2.position[i] = (1-alpha[i])*p1.position[i] + alpha[i]*p2.position[i]
     return c1, c2
+
 
 def mutate(x, mu, sigma):
     y = x.deepcopy()
@@ -46,5 +48,11 @@ def get_top_5(bestsol, pop):
 def apply_parmas_optimization_preferences(x, preferences):
     for i, (key, optimize) in enumerate(preferences.items()):
         if not optimize:
-            x.position[i] = getattr(Globals, key.upper())
+            if key == "c8":
+                x.position[i] = getattr(Globals, key.upper())
+            else:
+                if x.position[i] > 0:
+                    x.position[i] = getattr(Globals, key.upper()) / 2
+                else:
+                    x.position[i] = getattr(Globals, key.upper()) * 2
     
