@@ -22,7 +22,8 @@ def run(problem, params):
     nc = int(np.round(pc*npop/2)*2)
     mu = params.mu
     sigma = params.sigma
-
+    core = params.core
+    
     # Empty Individual Template
     empty_individual = structure()
     empty_individual.position = None
@@ -46,6 +47,7 @@ def run(problem, params):
     
     # Main Loop
     for it in range(maxit):
+        print(f"CORE: {core} IT {it}/{maxit}")
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
         if avg_cost != 0:
@@ -87,7 +89,7 @@ def run(problem, params):
         bestcost[it] = bestsol.cost
 
         # Show Iteration Information
-        ga_functions.print_top_5(bestsol, pop, it)
+        # ga_functions.print_top_5(bestsol, pop, it)
 
     # Output
     out = structure()
