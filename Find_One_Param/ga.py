@@ -49,7 +49,8 @@ def run(problem, params):
     
     # Main Loop
     for it in range(maxit):
-        print(f"CORE: {core} IT {it}/{maxit}")
+        if it % 10 == 0:
+            print(f"CORE: {core} IT {it}/{maxit}")
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
         if avg_cost != 0:
