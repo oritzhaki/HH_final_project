@@ -24,7 +24,7 @@ def get_scaled_data(path):
     V = inputs[:, -1]
     return t, V, labels
 
-t, V, labels = get_data('Prod/dataset.csv')
+t, V, labels = get_data('../GeneratedData/OldApproach/dataset.csv')
 
 def l2_loss(params, batchSize):
     loss = 0

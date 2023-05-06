@@ -6,6 +6,8 @@ import ga
 import Globals
 import loss_functions as loss
 import pandas as pd
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 # Problem Definition
 problem = structure()
@@ -14,7 +16,7 @@ problem.nvar = 8
 problem.varmin = 0
 problem.varmax = 1
 problem.update_vec = [0,1]
-problem.batch_size = 32
+problem.batch_size = 0
 problem.params_to_optimize = { "c1" : True,
                                "c2" : True,
                                "c3" : True,

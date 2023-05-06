@@ -7,14 +7,14 @@ import Globals
 import loss_functions as loss
 import pandas as pd
 
-costfuncs = [loss.l2_loss, loss.l1_loss]
-batch_sizes = [512, 1024]
+costfuncs = [loss.l2_loss, loss.l1_loss, loss.logcosh_loss]
+batch_sizes = [0,32]
 maxits = [1000]
 npops = [70]
 betas = [0, 1, 10]
 pcs = [1, 2]
 mus = [0.2, 0.4, 0.8]
-sigmas = [Globals.easy_sigma, Globals.medium_sigma, Globals.extreme_sigma]
+sigmas = [0.05, 0.1, 0.2]
 
 
 df = pd.DataFrame(columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'Sigma', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost'])
@@ -36,9 +36,9 @@ for costfunc in costfuncs:
                                 problem = structure()
                                 problem.costfunc = costfunc
                                 problem.nvar = 8
-                                problem.varmin = Globals.medium_varmin
-                                problem.varmax = Globals.medium_varmax
-                                problem.update_vec = Globals.easy_gamma
+                                problem.varmin = 0
+                                problem.varmax = 1
+                                problem.update_vec = [0,1]
                                 problem.batch_size = batch_size
 
                                 params = structure()

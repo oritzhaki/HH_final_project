@@ -26,7 +26,7 @@ def get_scaled_data(path):
     V = inputs[:, -1]
     return t, V, labels
 
-t, V, labels = get_data('../GeneratedData/NewApproach/dataset.csv')
+t, V, labels = get_data('../GeneratedData/OldApproach/dataset.csv')
 
 
 def get_batch_indices(batchSize):

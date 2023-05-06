@@ -67,7 +67,7 @@ row = {
     'BestSol4': str(out.top_5[0][3]),
     'BestSol5': str(out.top_5[0][4]),
     'AllCost': str(out.top_5[1]),
-    'AvgCost': str(sum(out.bestcost)/len(out.bestcost))
+    'AvgCost': str(sum(out.top_5[1])/len(out.top_5[1]))
 }
 
 # Check if file exists

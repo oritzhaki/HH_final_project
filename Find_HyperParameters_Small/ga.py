@@ -1,7 +1,7 @@
 import numpy as np
 import ga_functions
 from ypstruct import structure
-
+from tqdm import tqdm
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
@@ -25,7 +25,7 @@ def run(problem, params):
     mu = params.mu
     sigma = params.sigma
     core = params.core
-
+    
     # Empty Individual Template
     empty_individual = structure()
     empty_individual.position = None
@@ -70,9 +70,6 @@ def run(problem, params):
             ga_functions.apply_bound(c1, varmin, varmax)
             ga_functions.apply_bound(c2, varmin, varmax)
 
-            ga_functions.apply_parmas_optimization_preferences(c1, params_to_optimize)
-            ga_functions.apply_parmas_optimization_preferences(c2, params_to_optimize)
-            
             c1.cost = costfunc(c1.position, batch_size)
             if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()

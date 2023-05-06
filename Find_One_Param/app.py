@@ -15,13 +15,13 @@ problem.varmin = Globals.medium_varmin
 problem.varmax = Globals.medium_varmax
 problem.update_vec = [0, 1]
 problem.batch_size = 32
-problem.params_to_optimize = { "c1" : True,
-                               "c2" : True,
-                               "c3" : True,
-                               "c4" : True,
-                               "c5" : True,
-                               "c6" : True,
-                               "c7" : True,
+problem.params_to_optimize = { "c1" : False,
+                               "c2" : False,
+                               "c3" : False,
+                               "c4" : False,
+                               "c5" : False,
+                               "c6" : False,
+                               "c7" : False,
                                "c8" : False
                               }
 

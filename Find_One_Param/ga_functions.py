@@ -19,9 +19,12 @@ def mutate(x, mu, sigma):
     y.position[ind] += sigma[ind] * np.random.randn(*ind.shape) * np.random.randn(*ind.shape)
     return y
 
-def apply_bound(x, varmin, varmax):
-    x.position = np.maximum(x.position, varmin)
-    x.position = np.minimum(x.position, varmax)
+def apply_bound(x, varmin, varmax, reset=0.5):
+    for i in range(len(x.position) - 1):
+        if x.position[i] < varmin[i]:
+            x.position[i] = reset
+        elif x.position[i] > varmax[i]:
+            x.position[i] = reset
 
 def roulette_wheel_selection(p):
     c = np.cumsum(p)
@@ -48,11 +51,5 @@ def get_top_5(bestsol, pop):
 def apply_parmas_optimization_preferences(x, preferences):
     for i, (key, optimize) in enumerate(preferences.items()):
         if not optimize:
-            if key == "c8":
-                x.position[i] = getattr(Globals, key.upper())
-            else:
-                if x.position[i] > 0:
-                    x.position[i] = getattr(Globals, key.upper()) / 2
-                else:
-                    x.position[i] = getattr(Globals, key.upper()) * 2
+            x.position[i] = getattr(Globals, key.upper())
     

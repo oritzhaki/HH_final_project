@@ -47,8 +47,8 @@ def run(problem, params):
     
     # Main Loop
     for it in range(maxit):
-        if it % 10 == 0:
-            print(f"CORE: {core} IT {it}/{maxit}")
+        # if it % 10 == 0:
+        #     print(f"CORE: {core} IT {it}/{maxit}")
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
         if avg_cost != 0:
@@ -70,7 +70,7 @@ def run(problem, params):
 
             ga_functions.apply_parmas_optimization_preferences(c1, params_to_optimize)
             ga_functions.apply_parmas_optimization_preferences(c2, params_to_optimize)
-            
+
             c1.cost = costfunc(c1.position, batch_size)
             if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()
@@ -90,7 +90,7 @@ def run(problem, params):
         bestcost[it] = bestsol.cost
 
         # Show Iteration Information
-        # ga_functions.print_top_5(bestsol, pop, it)
+        ga_functions.print_top_5(bestsol, pop, it)
 
     # Output
     out = structure()

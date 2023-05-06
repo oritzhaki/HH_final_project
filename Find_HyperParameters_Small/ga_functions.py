@@ -21,11 +21,13 @@ def mutate(x, mu, sigma):
     return y
 
 def apply_bound(x, varmin, varmax, reset=0.5):
+    x.position[-1] = 0.4
     for i in range(len(x.position) - 1):
         if x.position[i] < varmin:
             x.position[i] = reset
         elif x.position[i] > varmax:
             x.position[i] = reset
+    
 
 
 def roulette_wheel_selection(p):
@@ -48,9 +50,5 @@ def print_top_5(bestsol, pop, it):
         
 def get_top_5(bestsol, pop):
     top_5 = [bestsol] + pop[1:5]
-    return [sol.position for sol in top_5], [sol.cost for sol in top_5]
+    return [Globals.tranformation_vector * sol.position for sol in top_5], [sol.cost for sol in top_5]
 
-def apply_parmas_optimization_preferences(x, preferences):
-    for i, (key, optimize) in enumerate(preferences.items()):
-        if not optimize:
-            x.position[i] = getattr(Globals, key.upper())
