@@ -1,4 +1,5 @@
-
+import os
+import csv
 import numpy as np
 import matplotlib.pyplot as plt
 from ypstruct import structure
@@ -17,7 +18,8 @@ mus = [0.2, 0.4, 0.8]
 sigmas = [0.05, 0.1, 0.2]
 
 
-df = pd.DataFrame(columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'Sigma', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost'])
+columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'Sigma', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost']
+
 
 num_combinations = len(costfuncs) * len(batch_sizes) * len(maxits) * len(npops) * len(betas) * len(pcs) * len(mus) * len(sigmas)
 counter = 1
@@ -68,10 +70,19 @@ for costfunc in costfuncs:
                                     'AllCost': str(out.top_5[1]),
                                     'AvgCost': str(sum(out.top_5[1])/len(out.top_5[1]))
                                 }
-                                df = df.append(row, ignore_index=True)
-                                df.to_csv('my_dataframe.csv', index=False)
-                                
-                                counter+=1
+
+                                # Check if file exists
+                                if not os.path.exists('my_dataframe.csv'):
+                                    # If file doesn't exist, create it and write the headers
+                                    with open('my_dataframe.csv', 'w', newline='') as f:
+                                        writer = csv.writer(f)
+                                        writer.writerow(columns)
+
+                                # Append the row to the CSV file
+                                with open('my_dataframe.csv', 'a', newline='') as f:
+                                    writer = csv.writer(f)
+                                    writer.writerow(row.values())
+                                    counter+=1
 
 
 
