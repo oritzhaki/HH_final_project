@@ -48,7 +48,7 @@ def run(problem, params):
     bestcost = np.empty(maxit)
     
     # Main Loop
-    for it in range(maxit):
+    for it in tqdm(range(maxit)):
         # if it % 10 == 0:
         #     print(f"CORE: {core} IT {it}/{maxit}")
         costs = np.array([x.cost for x in pop])
@@ -89,7 +89,7 @@ def run(problem, params):
         bestcost[it] = bestsol.cost
 
         # Show Iteration Information
-        ga_functions.print_top_5(bestsol, pop, it)
+        # ga_functions.print_top_5(bestsol, pop, it)
 
     # Output
     out = structure()
