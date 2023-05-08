@@ -84,7 +84,7 @@ def run(problem, params):
         bestcost[it] = bestsol.cost
 
         # Show Iteration Information
-        ga_functions.print_top_5(bestsol, pop, it)
+        # ga_functions.print_top_5(bestsol, pop, it)
 
     # Output
     out = structure()
