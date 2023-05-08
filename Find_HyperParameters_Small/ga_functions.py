@@ -9,15 +9,15 @@ def crossover(p1, p2, update_vec):
     c2 = p1.deepcopy()
     alpha = [random.choice(update_vec) for _ in range(len(p1.position))]
     for i in range(len(p1.position)):
-        c1.position[i] = alpha[i]*p1.position[i] + (1-alpha[i])*p2.position[i]
-        c2.position[i] = (1-alpha[i])*p1.position[i] + alpha[i]*p2.position[i]
+        c1.position[i] = np.round(alpha[i]*p1.position[i] + (1-alpha[i])*p2.position[i], 6)
+        c2.position[i] = np.round((1-alpha[i])*p1.position[i] + alpha[i]*p2.position[i], 6)
     return c1, c2
 
 def mutate(x, mu, sigma):
     y = x.deepcopy()
     flag = np.random.rand(*x.position.shape) <= mu
     ind = np.argwhere(flag)
-    y.position[ind] += sigma * np.random.randn(*ind.shape) * np.random.randn(*ind.shape)
+    y.position[ind] += np.round(sigma * np.random.randn(*ind.shape) * np.random.randn(*ind.shape),6)
     return y
 
 def apply_bound(x, varmin, varmax, reset=0.5):

@@ -6,18 +6,23 @@ import ga
 import Globals
 import loss_functions as loss
 import pandas as pd
+import csv
+import os
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-costfuncs = [loss.l2_loss, loss.l1_loss]
-batch_sizes = [512, 1024]
-maxits = [1000]
-npops = [70]
+costfuncs = [loss.logcosh_loss, loss.l2_loss, loss.l1_loss]
+batch_sizes = [32]
+maxits = [500]
+npops = [100]
 betas = [0, 1, 10]
-pcs = [1, 2]
-mus = [0.2, 0.4, 0.8]
-sigmas = [Globals.easy_sigma, Globals.medium_sigma, Globals.extreme_sigma]
+pcs = [2]
+mus = [0.4, 0.8]
+sigmas = [Globals.extreme_sigma]
 
 
-df = pd.DataFrame(columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'Sigma', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost'])
+columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'Sigma', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost']
+
 
 num_combinations = len(costfuncs) * len(batch_sizes) * len(maxits) * len(npops) * len(betas) * len(pcs) * len(mus) * len(sigmas)
 counter = 1
@@ -68,8 +73,16 @@ for costfunc in costfuncs:
                                     'AllCost': str(out.top_5[1]),
                                     'AvgCost': str(sum(out.top_5[1])/len(out.top_5[1]))
                                 }
-                                df = df.append(row, ignore_index=True)
-                                df.to_csv('my_dataframe.csv', index=False)
+                                if not os.path.exists('my_dataframe.csv'):
+                                    # If file doesn't exist, create it and write the headers
+                                    with open('my_dataframe.csv', 'w', newline='') as f:
+                                        writer = csv.writer(f)
+                                        writer.writerow(columns)
+
+                                # Append the row to the CSV file
+                                with open('my_dataframe.csv', 'a', newline='') as f:
+                                    writer = csv.writer(f)
+                                    writer.writerow(row.values())
                                 
                                 counter+=1
 

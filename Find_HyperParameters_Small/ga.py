@@ -39,7 +39,7 @@ def run(problem, params):
     # Initialize Population
     pop = empty_individual.repeat(npop)
     for i in range(npop):
-        pop[i].position = np.random.uniform(varmin, varmax, nvar)
+        pop[i].position = np.round(np.random.uniform(varmin, varmax, nvar), 6)
         pop[i].cost = costfunc(pop[i].position, batch_size)
         if pop[i].cost < bestsol.cost:
             bestsol = pop[i].deepcopy()

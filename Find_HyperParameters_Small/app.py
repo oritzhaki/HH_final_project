@@ -82,7 +82,7 @@ for costfunc in costfuncs:
                                 with open('my_dataframe.csv', 'a', newline='') as f:
                                     writer = csv.writer(f)
                                     writer.writerow(row.values())
-                                    counter+=1
+                                counter+=1
 
 
 
