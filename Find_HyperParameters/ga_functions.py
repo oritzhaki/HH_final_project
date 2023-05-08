@@ -13,7 +13,7 @@ def mutate(x, mu, sigma):
     y = x.deepcopy()
     flag = np.random.rand(*x.position.shape) <= mu
     ind = np.argwhere(flag)
-    y.position[ind] += sigma[ind] * np.random.randn(*ind.shape) * np.random.randn(*ind.shape)
+    y.position[ind] += np.random.randn(*ind.shape) * np.random.randn(*ind.shape) * np.random.randn(*ind.shape)* np.random.randn(*ind.shape)
     return y
 
 def apply_bound(x, varmin, varmax):

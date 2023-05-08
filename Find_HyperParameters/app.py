@@ -8,6 +8,7 @@ import loss_functions as loss
 import pandas as pd
 import csv
 import os
+
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
@@ -15,9 +16,9 @@ costfuncs = [loss.logcosh_loss, loss.l2_loss, loss.l1_loss]
 batch_sizes = [32]
 maxits = [500]
 npops = [100]
-betas = [0, 1, 10]
+betas = [1, 10]
 pcs = [2]
-mus = [0.4, 0.8]
+mus = [0.5, 0.8]
 sigmas = [Globals.extreme_sigma]
 
 
@@ -43,7 +44,7 @@ for costfunc in costfuncs:
                                 problem.nvar = 8
                                 problem.varmin = Globals.medium_varmin
                                 problem.varmax = Globals.medium_varmax
-                                problem.update_vec = Globals.easy_gamma
+                                problem.update_vec = Globals.extreme_gamma
                                 problem.batch_size = batch_size
 
                                 params = structure()
