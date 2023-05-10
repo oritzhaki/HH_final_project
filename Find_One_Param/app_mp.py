@@ -13,11 +13,11 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description='Run GA for optimizing problem.')
-parser.add_argument('--core', type=int, default=1, help='Core Number')
+parser.add_argument('--task', type=int, default=1, help='task Number')
 args = parser.parse_args()
 # Problem Definition
 problem = structure()
-problem.costfunc = loss.l2_loss
+problem.costfunc = loss.logcosh_loss
 problem.nvar = 8
 problem.varmin = Globals.medium_varmin
 problem.varmax = Globals.medium_varmax
@@ -35,15 +35,14 @@ problem.params_to_optimize = { "c1" : True,
 
 # GA Parameters
 params = structure()
-params.maxit = 1000
+params.maxit = 500
 params.npop = 100
 params.beta = 1
 params.pc = 2
-params.mu = 0.2
-params.sigma = Globals.medium_sigma
-params.core = args.core
+params.mu = 0.5
+params.task = args.task
 
-columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'Sigma', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost']
+columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost']
 
 
 # Run GA
@@ -57,7 +56,6 @@ row = {
     'Beta': params.beta,
     'PC': params.pc,
     'Mu': params.mu,
-    'Sigma': str(params.sigma),
     'BestSol1': str(out.top_5[0][0]),
     'BestSol2': str(out.top_5[0][1]),
     'BestSol3': str(out.top_5[0][2]),
@@ -66,6 +64,7 @@ row = {
     'AllCost': str(out.top_5[1]),
     'AvgCost': str(sum(out.top_5[1])/len(out.top_5[1]))
 }
+
 # Check if file exists
 if not os.path.exists('result.csv'):
     # If file doesn't exist, create it and write the headers

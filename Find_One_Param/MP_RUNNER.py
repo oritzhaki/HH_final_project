@@ -24,8 +24,8 @@ if __name__ == '__main__':
 
     # Create a list of tasks, one for each CPU core
     tasks = []
-    for i in range(num_cores):
-        task = {'script_path': 'app_mp.py', 'args': ['--core', str(i)]}
+    for i in range(100):
+        task = {'script_path': 'app_mp.py', 'args': ['--task', str(i)]}
         tasks.append(task)
 
     # Create a pool of workers
