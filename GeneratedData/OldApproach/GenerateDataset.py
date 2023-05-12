@@ -35,7 +35,7 @@ def get_y(t, V):
 dataset = []
 n = 0
 t_total = 100
-VOLTS = np.arange(-90, 90, 10)
+VOLTS = np.arange(-70, 100, 10)
 results = []
 
 for V in VOLTS:
@@ -53,10 +53,10 @@ print(graph_df)
 dataset_df = pd.DataFrame(dataset)
 print(dataset_df)
 graph_df.plot()
-plt.legend(np.arange(-90, 90, 10))
+plt.legend(np.arange(-70, 100, 10))
 plt.xlabel("Time (ms)")
 plt.ylabel("Conductivity (G)")
 plt.show()
 
-# graph_df.to_csv('Prod/graph_df.csv', index=False)
-# dataset_df.to_csv('Prod/dataset.csv', index=False)
+# graph_df.to_csv('graph_df.csv', index=False)
+# dataset_df.to_csv('dataset.csv', index=False)
