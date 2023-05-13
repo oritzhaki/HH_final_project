@@ -32,6 +32,7 @@ params.npop = 100
 params.beta = 1
 params.pc = 2
 params.mu = 0.2
+params.sigma = Globals.medium_sigma
 
 # Run GA
 out = ga.run(problem, params)

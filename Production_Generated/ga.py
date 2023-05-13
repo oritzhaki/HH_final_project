@@ -24,6 +24,7 @@ def run(problem, params):
     nc = int(np.round(pc*npop/2)*2)
     mu = params.mu
     task = params.task
+    run_type = params.run_type
 
     # Empty Individual Template
     empty_individual = structure()
@@ -39,7 +40,7 @@ def run(problem, params):
     pop = empty_individual.repeat(npop)
     for i in range(npop):
         pop[i].position = np.random.uniform(varmin, varmax, nvar)
-        pop[i].cost = loss(pop[i].position, batch_size, costfunc)
+        pop[i].cost = loss(pop[i].position, batch_size, costfunc, run_type)
         if pop[i].cost < bestsol.cost:
             bestsol = pop[i].deepcopy()
 
@@ -47,9 +48,9 @@ def run(problem, params):
     bestcost = np.empty(maxit)
     
     # Main Loop
-    for it in range(maxit):
+    for it in range(maxit+1):
         if it % 10 == 0:
-            print(f"TASK: {task} IT {it}/{maxit}")
+            print(f"RUN TYPE: {run_type} TASK: {task} IT {it}/{maxit}")
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
         if avg_cost != 0:
@@ -72,11 +73,11 @@ def run(problem, params):
             ga_functions.apply_parmas_optimization_preferences(c1, params_to_optimize)
             ga_functions.apply_parmas_optimization_preferences(c2, params_to_optimize)
             
-            c1.cost = loss(c1.position, batch_size, costfunc)
+            c1.cost = loss(c1.position, batch_size, costfunc, run_type)
             if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()
 
-            c2.cost = loss(c2.position, batch_size, costfunc)
+            c2.cost = loss(c2.position, batch_size, costfunc, run_type)
             if c2.cost < bestsol.cost:
                 bestsol = c2.deepcopy()
 
@@ -91,7 +92,7 @@ def run(problem, params):
         bestcost[it] = bestsol.cost
 
         # Show Iteration Information
-        ga_functions.print_top_5(bestsol, pop, it)
+        # ga_functions.print_top_5(bestsol, pop, it)
 
     # Output
     out = structure()
