@@ -3,7 +3,7 @@ import HH_Equations as Equations
 import random
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
-import Globals
+
 
 def get_data(path):
     data = pd.read_csv(path)
@@ -26,7 +26,7 @@ def get_scaled_data(path):
     V = inputs[:, -1]
     return t, V, labels
 
-t, V, labels = get_data('../GeneratedData/OldApproach/dataset.csv')
+t, V, labels = get_data('../GeneratedData/Data/Noise_Data/dataset_noise_1.csv')
 
 
 def get_batch_indices(batchSize):
@@ -39,39 +39,22 @@ def get_batch_indices(batchSize):
     indices += random_indices
     return indices
 
-def l2_loss(params, batchSize):
+
+def l1_loss(y_hat, y):
+    return np.abs(y_hat - y)
+def l2_loss(y_hat, y):
+    return (np.round(y_hat,8) - np.round(y,8)) ** 2
+def logcosh_loss(y_hat, y):
+    return np.log(np.cosh(y_hat - y))
+
+def loss(params, batchSize, costfunc):
     loss = 0
     indices = get_batch_indices(batchSize)
     for i in indices:
-        y_hat = Equations.get_y_hat((params), t[i], V[i])
+        y_hat = np.round(Equations.get_y_hat(params, t[i], V[i]), 8)
         if y_hat == float("inf") or np.isnan(y_hat):
             y_hat = np.random.uniform(1,2) * 100
-        loss += (np.round(y_hat,8) - np.round(labels[i],8)) ** 2
+        loss += costfunc(y_hat, labels[i])
     if loss == float("inf") or np.isnan(loss): loss = np.random.uniform(1,2) * 1000
     ret_loss = loss / len(indices)
-    return ret_loss
-
-
-def l1_loss(params, batchSize):
-    loss = 0
-    indices = get_batch_indices(batchSize)
-    for i in indices:
-        y_hat = Equations.get_y_hat(params, t[i], V[i])
-        if y_hat == float("inf") or np.isnan(y_hat):
-            y_hat = np.random.uniform(1,2) * 100
-        loss += np.abs(y_hat - labels[i])
-    if loss == float("inf") or np.isnan(loss): loss = np.random.uniform(1,2) * 1000
-    ret_loss = loss / len(indices)
-    return ret_loss
-
-def logcosh_loss(params, batchSize):
-    loss = 0
-    indices = get_batch_indices(batchSize)
-    for i in indices:
-        y_hat = Equations.get_y_hat(params, t[i], V[i])
-        if y_hat == float("inf") or np.isnan(y_hat):
-            y_hat = np.random.uniform(1, 2) * 100
-        loss += np.log(np.cosh(y_hat - labels[i]))
-    if loss == float("inf") or np.isnan(loss): loss = np.random.uniform(1, 2) * 1000
-    ret_loss = loss / len(indices)  # the average of all t, V's checked
     return ret_loss

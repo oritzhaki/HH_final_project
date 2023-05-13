@@ -2,6 +2,7 @@ import numpy as np
 import ga_functions
 from ypstruct import structure
 from tqdm import tqdm
+from loss_functions import loss
 
 def run(problem, params):
     
@@ -37,7 +38,7 @@ def run(problem, params):
     pop = empty_individual.repeat(npop)
     for i in range(npop):
         pop[i].position = np.random.uniform(varmin, varmax, nvar)
-        pop[i].cost = costfunc(pop[i].position, batch_size)
+        pop[i].cost = loss(pop[i].position, batch_size, costfunc)
         if pop[i].cost < bestsol.cost:
             bestsol = pop[i].deepcopy()
 
@@ -65,11 +66,11 @@ def run(problem, params):
             ga_functions.apply_bound(c1, varmin, varmax)
             ga_functions.apply_bound(c2, varmin, varmax)
 
-            c1.cost = costfunc(c1.position, batch_size)
+            c1.cost = loss(c1.position, batch_size, costfunc)
             if c1.cost < bestsol.cost:
                 bestsol = c1.deepcopy()
 
-            c2.cost = costfunc(c2.position, batch_size)
+            c2.cost = loss(c2.position, batch_size, costfunc)
             if c2.cost < bestsol.cost:
                 bestsol = c2.deepcopy()
 
@@ -84,7 +85,7 @@ def run(problem, params):
         bestcost[it] = bestsol.cost
 
         # Show Iteration Information
-        ga_functions.print_top_5(bestsol, pop, it)
+        # ga_functions.print_top_5(bestsol, pop, it)
 
     # Output
     out = structure()
