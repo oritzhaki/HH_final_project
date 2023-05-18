@@ -36,8 +36,8 @@ problem.params_to_optimize = { "c1" : True,
 
 # GA Parameters
 params = structure()
-params.maxit = 1000
-params.npop = 100
+params.maxit = 300
+params.npop = 50
 params.beta = 1
 params.pc = 2
 params.mu = 0.5

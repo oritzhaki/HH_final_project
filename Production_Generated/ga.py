@@ -48,9 +48,9 @@ def run(problem, params):
     bestcost = np.empty(maxit)
     
     # Main Loop
-    for it in range(maxit+1):
+    for it in range(maxit):
         if it % 10 == 0:
-            print(f"RUN TYPE: {run_type} TASK: {task} IT {it}/{maxit}")
+            print(f"RUN TYPE: {run_type} TASK: {task} IT {it+1}/{maxit}")
         costs = np.array([x.cost for x in pop])
         avg_cost = np.mean(costs)
         if avg_cost != 0:
