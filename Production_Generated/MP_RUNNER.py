@@ -11,7 +11,7 @@ def worker(script_path, args):
     pid = os.getpid()
 
     # Execute the Python script as a separate process with command-line arguments
-    cmd = ['python', script_path] + args
+    cmd = ['python3', script_path] + args
     subprocess.run(cmd)
 
     # Return the process ID
@@ -20,7 +20,7 @@ def worker(script_path, args):
 
 if __name__ == '__main__':
     # Determine the number of CPU cores to use
-    num_cores = multiprocessing.cpu_count()
+    num_cores = multiprocessing.cpu_count() - 2
     print(f"Num Of Cores: {num_cores}")
 
     # Create a list of tasks, one for each CPU core
