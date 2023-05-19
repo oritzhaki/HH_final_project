@@ -23,6 +23,7 @@ def run(problem, params):
     pc = params.pc
     nc = int(np.round(pc*npop/2)*2)
     mu = params.mu
+    sigma = params.sigma
     task = params.task
     run_type = params.run_type
 
@@ -64,8 +65,8 @@ def run(problem, params):
             
             c1, c2 = ga_functions.crossover(p1, p2, update_vec)
 
-            c1 = ga_functions.mutate(c1, mu)
-            c2 = ga_functions.mutate(c2, mu)
+            c1 = ga_functions.mutate(c1, mu, sigma)
+            c2 = ga_functions.mutate(c2, mu, sigma)
 
             ga_functions.apply_bound(c1, varmin, varmax)
             ga_functions.apply_bound(c2, varmin, varmax)

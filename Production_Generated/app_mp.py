@@ -36,13 +36,14 @@ problem.params_to_optimize = { "c1" : True,
 
 # GA Parameters
 params = structure()
-params.maxit = 300
-params.npop = 50
+params.maxit = 500
+params.npop = 70
 params.beta = 1
 params.pc = 2
 params.mu = 0.5
 params.task = args.task
 params.run_type = args.run_type
+params.sigma = Globals.medium_sigma
 run_type = params.run_type
 
 columns=['CostFunc', 'BatchSize', 'MaxIt', 'NPop', 'Beta', 'PC', 'Mu', 'BestSol1', 'BestSol2', 'BestSol3', 'BestSol4', 'BestSol5', 'AllCost', 'AvgCost']
