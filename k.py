@@ -1,16 +1,17 @@
 import numpy as np
 
-def roulette_wheel_selection(p):
-    c = np.cumsum(p)
-    r = sum(p)*np.random.rand()
-    ind = np.argwhere(r <= c)
-    return ind[0][0]
+# Suppose we have the following data
+data = np.array([1, 2, 5, 6, 9, 12, 18, 25, 30, 40, 55, 60, 120])
 
-beta = 1
-costs = np.array([0.05, 0.1, 0.2])
-avg_cost = np.mean(costs)
-if avg_cost != 0:
-    costs = costs/avg_cost
-probs = np.exp(-beta*costs)
+# Calculate Q1, Q3, and IQR
+Q1 = np.percentile(data, 25)
+Q3 = np.percentile(data, 75)
+IQR = Q3 - Q1
 
-roulette_wheel_selection(probs)
+# Define bounds
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Identify outliers
+outliers = data[(data < lower_bound) | (data > upper_bound)]
+print('Outliers: ', outliers)
