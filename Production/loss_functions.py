@@ -1,93 +1,62 @@
 import numpy as np
 import HH_Equations as Equations
 import random
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
-
 import os
+from functools import lru_cache
 
 def count_csv_files():
-    # Directory path
     directory = 'ProdDataRats/'
-
-    # Initialize a counter
-    csv_count = 0
-
-    # Iterate over files in the directory
-    for filename in os.listdir(directory):
-        # Check if the file is a CSV file
-        if filename.endswith('.csv'):
-            csv_count += 1
-
+    csv_count = len([filename for filename in os.listdir(directory) if filename.endswith('.csv')])
     return csv_count
 
 CSV_FILES_NUM = count_csv_files()
 TRAIN = int(0.8 * CSV_FILES_NUM)
-TEST = int(0.2 * CSV_FILES_NUM)
+TEST = CSV_FILES_NUM - TRAIN
 
-
+@lru_cache(maxsize=None)  # Cache the result of get_data to avoid unnecessary I/O operations
 def get_data(path):
     data = pd.read_csv(path)
-    inputs = data.iloc[:, :-1]
-    t, V = inputs
-    t = inputs.iloc[:,0].values
-    V = inputs.iloc[:,1].values
-    labels = data.iloc[:,2].values
+    t = data.iloc[:, 0].values
+    V = data.iloc[:, 1].values
+    labels = data.iloc[:, 2].values
     return t, V, labels
-
-def get_scaled_data(path):
-    data = pd.read_csv(path)
-    data = data.values
-    scaler = StandardScaler()
-    data_standardized = scaler.fit_transform(data)
-    inputs = data_standardized[:, :-1]
-    labels = data_standardized[:, -1]
-    t = inputs[:, :-1]
-    t = np.arange(t.shape[0]) 
-    V = inputs[:, -1]
-    return t, V, labels
-
 
 def get_batch_indices(batchSize , t):
     indices = []
     for i in range(0, len(t), 100):
-        indices += list(range(i, i+20))
+        indices += list(range(i, i+49))
     
     remaining_indices = set(range(len(t))) - set(indices)
     random_indices = random.sample(remaining_indices, batchSize)
     indices += random_indices
-    return indices
 
+    return indices
 
 def l1_loss(y_hat, y):
     return np.abs(y_hat - y)
+
 def l2_loss(y_hat, y):
-    return (np.round(y_hat,8) - np.round(y,8)) ** 2
+    return (y_hat - y) ** 2
+
 def logcosh_loss(y_hat, y):
     return np.log(np.cosh(y_hat - y))
 
 def calc_loss_onetime(params, batchSize, costfunc, i):
-    t, V, labels = get_data(f'../GeneratedData/Data/Noise_Data/dataset_noise_{i}.csv')
-    loss = 0
-    indices = get_batch_indices(batchSize, t)
-    for i in indices:
-        y_hat = np.round(Equations.get_y_hat(params, t[i], V[i]), 8)
-        if y_hat == float("inf") or np.isnan(y_hat):
-            y_hat = np.random.uniform(1,2) * 100
-        loss += costfunc(y_hat, labels[i])
-    if loss == float("inf") or np.isnan(loss): loss = np.random.uniform(1,2) * 1000
-    ret_loss = loss / len(indices)
+    t, V, labels = get_data(f'ProdDataRats/ProdDataRatsRemoved/sample_{i}_removed.csv')
+    indices = np.array(get_batch_indices(batchSize, t))
+    t_batch = t[indices]
+    V_batch = V[indices]
+    y_hat = np.round(Equations.get_y_hat(params, t_batch, V_batch), 8)
+    y_hat = np.where(np.isinf(y_hat) | np.isnan(y_hat), np.random.uniform(1,2) * 100, y_hat)
+    loss = costfunc(y_hat, labels[indices])
+    loss = np.where(np.isinf(loss) | np.isnan(loss), np.random.uniform(1,2) * 1000, loss)
+    ret_loss = loss.mean()
     return ret_loss
 
 def loss(params, batchSize, costfunc, run_type):
     if run_type == 'train':
-        it_loss_train = 0
-        for i in range(1, TRAIN + 1):
-            it_loss_train += calc_loss_onetime(params, batchSize, costfunc, i)
-        return it_loss_train / TRAIN
-    
+        return np.mean([calc_loss_onetime(params, batchSize, costfunc, i) for i in range(1, TRAIN + 1)])
     if run_type == 'test':
-        it_loss_train = 0
-        for i in range(CSV_FILES_NUM - TEST + 1, CSV_FILES_NUM + 1):
-            it_loss_train += calc_loss_onetime(params, batchSize, costfunc, i)
-        return it_loss_train / TEST
+        return np.mean([calc_loss_onetime(params, batchSize, costfunc, i) for i in range(CSV_FILES_NUM - TEST + 1, CSV_FILES_NUM + 1)])
+

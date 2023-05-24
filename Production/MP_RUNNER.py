@@ -11,7 +11,7 @@ def worker(script_path, args):
     pid = os.getpid()
 
     # Execute the Python script as a separate process with command-line arguments
-    cmd = ['python', script_path] + args
+    cmd = ['python3', script_path] + args
     subprocess.run(cmd)
 
     # Return the process ID
@@ -25,12 +25,12 @@ if __name__ == '__main__':
 
     # Create a list of tasks, one for each CPU core
     tasks = []
-    for i in range(10):
+    for i in range(1000):
         run_type = 'train'
         task = {'script_path': 'app_mp.py', 'args': ['--task', str(i), '--run_type', str(run_type)]}
         tasks.append(task)
         
-    for i in range(10):
+    for i in range(1000):
         run_type = 'test'
         task = {'script_path': 'app_mp.py', 'args': ['--task', str(i), '--run_type', str(run_type)]}
         tasks.append(task)

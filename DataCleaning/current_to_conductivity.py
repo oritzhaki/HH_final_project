@@ -112,13 +112,16 @@ for temp_dir in os.listdir(data_dir):
 
         # Read the CSV file and store the data in a pandas dataframe
         df = pd.read_csv(csv_file_path)
-        # df = df.iloc[10:-1]
+        # cut off beginning and end of df, choose data points to create df of (100, 17)
         cut = generate_cut(df)
+        # remove membrane current
         slope, b = calc_linear_regression(cut)
         dots = create_subtract_dots(slope, b)
         df_after_substract = subtract_dots_from_dF_current(df, dots)
+        # turn into conductivity
         conductivity_df = create_cunductivity_dF(df_after_substract, temp_dir)
         conductivity_df = conductivity_df.drop(conductivity_df.columns[0], axis=1)
+        # normalize
         high_value = generate_high_value(conductivity_df)
         conductivity_df = create_cunductivity_dF_normalize_by_high_value(conductivity_df, high_value)
         #clean_conductivity_df = apply_low_pass_filter(conductivity_df, 10, 100)
