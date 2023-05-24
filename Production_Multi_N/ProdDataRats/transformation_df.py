@@ -1,7 +1,7 @@
 import pandas as pd
 
 def transform_df():
-    df = pd.read_csv(f'sample.csv')
+    df = pd.read_csv(f'sample2.csv')
     # Get the number of rows and columns in the original DataFrame
     num_rows, num_cols = df.shape
 
@@ -26,6 +26,7 @@ def transform_df():
     print(reshaped_df)
 
     # Save the result DataFrame to a CSV file
-    reshaped_df.to_csv(f'sample_removed.csv', index=False)
+    reshaped_df.to_csv(f'sample_2_transformed.csv', index=False)
 
 
+transform_df()
