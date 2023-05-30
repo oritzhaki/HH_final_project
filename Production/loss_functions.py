@@ -3,10 +3,13 @@ import HH_Equations as Equations
 import random
 import pandas as pd
 import os
+import Globals as G
 from functools import lru_cache
 
+
+
 def count_csv_files():
-    directory = 'ProdDataRats/'
+    directory = f'ProdDataRats/{G.CURRENT_CELL}'
     csv_count = len([filename for filename in os.listdir(directory) if filename.endswith('.csv')])
     return csv_count
 
@@ -25,7 +28,7 @@ def get_data(path):
 def get_batch_indices(batchSize , t):
     indices = []
     for i in range(0, len(t), 100):
-        indices += list(range(i, i+49))
+        indices += list(range(i, i+20))
     
     remaining_indices = set(range(len(t))) - set(indices)
     random_indices = random.sample(remaining_indices, batchSize)
@@ -43,7 +46,7 @@ def logcosh_loss(y_hat, y):
     return np.log(np.cosh(y_hat - y))
 
 def calc_loss_onetime(params, batchSize, costfunc, i):
-    t, V, labels = get_data(f'ProdDataRats/ProdDataRatsRemoved/sample_{i}_removed.csv')
+    t, V, labels = get_data(f'ProdDataRats/ProdDataRatsRemoved/{G.CURRENT_CELL}/sample_{i}_removed.csv')
     indices = np.array(get_batch_indices(batchSize, t))
     t_batch = t[indices]
     V_batch = V[indices]

@@ -25,15 +25,15 @@ if __name__ == '__main__':
 
     # Create a list of tasks, one for each CPU core
     tasks = []
-    for i in range(1000):
+    for i in range(300):
         run_type = 'train'
         task = {'script_path': 'app_mp.py', 'args': ['--task', str(i), '--run_type', str(run_type)]}
         tasks.append(task)
         
-    for i in range(1000):
-        run_type = 'test'
-        task = {'script_path': 'app_mp.py', 'args': ['--task', str(i), '--run_type', str(run_type)]}
-        tasks.append(task)
+    # for i in range(300):
+    #     run_type = 'test'
+    #     task = {'script_path': 'app_mp.py', 'args': ['--task', str(i), '--run_type', str(run_type)]}
+    #     tasks.append(task)
     # Create a pool of workers
     pool = multiprocessing.Pool(processes=num_cores)
 

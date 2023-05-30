@@ -23,7 +23,7 @@ problem.nvar = 8
 problem.varmin = Globals.medium_varmin
 problem.varmax = Globals.medium_varmax
 problem.update_vec = [0, 1]
-problem.batch_size = 0
+problem.batch_size = 32
 problem.params_to_optimize = { "c1" : True,
                                "c2" : True,
                                "c3" : True,
@@ -70,14 +70,14 @@ row = {
 }
 
 # Check if file exists
-if not os.path.exists(f'result_{run_type}.csv'):
+if not os.path.exists(f'result_{Globals.CURRENT_CELL}/result_{run_type}.csv'):
     # If file doesn't exist, create it and write the headers
-    with open(f'result_{run_type}.csv', 'w', newline='') as f:
+    with open(f'result_{Globals.CURRENT_CELL}/result_{run_type}.csv', 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(columns)
 
 # Append the row to the CSV file
-with open(f'result_{run_type}.csv', 'a', newline='') as f:
+with open(f'result_{Globals.CURRENT_CELL}/result_{run_type}.csv', 'a', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(row.values())
 

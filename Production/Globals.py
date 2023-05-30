@@ -1,6 +1,12 @@
 
 import numpy as np
 
+
+
+CURRENT_CELL = str('combine')
+
+
+
 # Varmin Varmax and Gammas
 
 C1 = 0.01

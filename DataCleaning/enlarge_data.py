@@ -3,8 +3,6 @@ import pandas as pd
 import numpy as np
 
 
-os.chdir('C:\\Users\\galle\\OneDrive\\Desktop\\Directories\\Study\\ShanaC\\Project\\Git_HH\\DataCleaning')
-
 
 # Set the directory containing the CSV files
 directory = "GoodConductivityData/"
@@ -26,7 +24,7 @@ for filename in os.listdir(directory):
         dataframes.append(df)
 
 # Loop through 100 iterations to generate new datasets
-for i in range(1, 101):
+for i in range(1, 11):
     # Generate a new list of random fractions of length equal to the number of dataframes
     rand_fractions = np.random.dirichlet(np.ones(len(dataframes)), size=1)[0]
 

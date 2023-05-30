@@ -3,12 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import butter, filtfilt
 
-os.chdir('C:\\Users\\galle\\OneDrive\\Desktop\\Directories\\Study\\ShanaC\\Project\\Git_HH\\DataCleaning')
 
 CHOSEN_ROW = 70
 VOLT_ARR = [-80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20, 30, 40, 50, 60 ,70, 80, 90]
 
 
+#if (df_num == '8021' or df_num == '9394' or df_num == '9398' or df_num == '9403' or df_num == '9406' or df_num == '9409' or df_num == '9412'):
 
 
 # Define the directory path where the modified data is stored

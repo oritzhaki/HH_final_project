@@ -10,7 +10,7 @@ first_df = pd.read_csv(first_file_path)
 column_headers = first_df.columns
 
 # Iterate over the range of file numbers
-for i in range(1, 101):
+for i in range(1, 11):
     # Construct the file path
     file_path = f"dataset/sample_{i}.csv"
 
