@@ -8,7 +8,7 @@ def alpha_n(Vi, params):
 
 def beta_n(Vi, params):
     c5, c6, c7 = params
-    result_beta = c5 * (np.exp(-c6 * ( Vi + c7 )))
+    result_beta = c5 * (np.exp(-c6 * (Vi + c7)))
     return result_beta
 
 def n_inf(alpha, beta):
