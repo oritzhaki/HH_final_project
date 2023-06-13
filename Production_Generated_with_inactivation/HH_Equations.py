@@ -36,8 +36,8 @@ def m_pow_x(m, params):
 def get_y_hat(params, ti, Vi): # todo: debug to check that correct vals go to correct funcs
     alpha_m_ = alpha_m(Vi, params[:4])
     beta_m_ = beta_m(Vi, params[4:7])
-    alpha_h_ = alpha_m(Vi, params[8:11])
-    beta_h_ = beta_m(Vi, params[11:])
+    alpha_h_ = alpha_h(Vi, params[8:11])
+    beta_h_ = beta_h(Vi, params[11:])
     m_inf_ = _inf(alpha_m_, beta_m_)
     tau_m_ = tau(alpha_m_, beta_m_)
     h_inf_ = _inf(alpha_h_, beta_h_)
