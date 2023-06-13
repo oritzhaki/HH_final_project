@@ -111,6 +111,6 @@ def run():
     base_dir = "ConductivityData"
 
     # List of cells that have label 1
-    cells_with_label_1 = ["8021", "9403", "9398", "9412", "8010"]
+    cells_with_label_1 = ["8021", "9403"]
     
     return prepare_data_for_cnn(base_dir, cells_with_label_1)

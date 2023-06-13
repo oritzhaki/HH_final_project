@@ -132,6 +132,6 @@ def get_predicted_cells_path(model, samples, cells_to_check):
             path = sample[0]
             if cell in path.split('/'):  # Assuming the cell number is a part of the path
                 wanted_cells_paths.append(path)
-
+    print(wanted_cells_paths)
     return wanted_cells_paths
     

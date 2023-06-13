@@ -98,6 +98,10 @@ def current_to_conductivity(data_dir):
                 # clean_conductivity_df = conductivity_df.applymap(lambda x: 0 if x < 0 else x)
 
                 conductivity_df = conductivity_df.drop(conductivity_df.columns[:5], axis=1)
+                
+                conductivity_df = apply_low_pass_filter(conductivity_df, cutoff_freq=0.4, sampling_freq=1.0)  # Use low-pass filter here
+                
+                
                 # Save the cleaned data to the original CSV file, overriding the original data
                 conductivity_df.to_csv(csv_file_path, index=False)
 

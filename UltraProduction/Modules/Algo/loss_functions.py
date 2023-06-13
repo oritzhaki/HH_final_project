@@ -18,7 +18,7 @@ def get_data(path):
 def get_batch_indices(batchSize , t):
     indices = []
     for i in range(0, len(t), 100):
-        indices += list(range(i, i+20))
+        indices += list(range(i, i+40))
     
     remaining_indices = set(range(len(t))) - set(indices)
     random_indices = random.sample(remaining_indices, batchSize)

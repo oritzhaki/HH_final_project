@@ -28,13 +28,13 @@ generate_fixed_data()
 current_to_conductivity()
 transformation_df()
 save_plots()
-cnn_data = prepare_data_for_cnn()
-cell_numbers = get_cell_numbers(cnn_data)
-model = CNN_train(cnn_data)
-predicted_cells_path = get_predicted_cells_path(model, cnn_data, cell_numbers)
+# cnn_data = prepare_data_for_cnn()
+# cell_numbers = get_cell_numbers(cnn_data)
+# model = CNN_train(cnn_data)
+# predicted_cells_path = get_predicted_cells_path(model, cnn_data, cell_numbers)
 
-for cell in predicted_cells_path:
-    MP_RUN(cell)
+# for cell in predicted_cells_path:
+#     MP_RUN(cell)
 
-for cell in predicted_cells_path:
-    result_conclusions(cell)
+# for cell in predicted_cells_path:
+#     result_conclusions(cell)
