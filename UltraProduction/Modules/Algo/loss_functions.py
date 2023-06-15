@@ -36,7 +36,7 @@ def logcosh_loss(y_hat, y):
     return np.log(np.cosh(y_hat - y))
 
 def calc_loss_onetime(params, batchSize, costfunc):
-    t, V, labels = get_data(f'ConductivityData/{G.CURRENT_CELL}')
+    t, V, labels = get_data(f'{G.CURRENT_CELL}')
     indices = np.array(get_batch_indices(batchSize, t))
     t_batch = t[indices]
     V_batch = V[indices]

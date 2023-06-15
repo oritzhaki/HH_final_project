@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import math
+import os
 
 def get_result_path(path):
     # Split the path to get the directory details
@@ -9,6 +10,23 @@ def get_result_path(path):
     return f"Results/{y_y}/{z_c}/{x}"
 
 
+import os
+
+def get_relevant_path(path):
+    # Split the path to get the directory and file details
+    parent_dir, filename = os.path.split(path)
+
+    # We use os.path.split to get the last part of the path (cell number)
+    _, cell = os.path.split(parent_dir)
+
+    # We use os.path.dirname twice more to get the parent of the parent directory
+    temp_dir = os.path.dirname(parent_dir)
+
+    # We use os.path.split to get the last part of the path (Temp and Kv1.1)
+    _, temp = os.path.split(temp_dir)
+    _, kv = os.path.split(os.path.dirname(temp_dir))
+
+    return f"{kv}/{temp}/{cell}/{filename}"
 
 
 def modified_euclidean_distance(x, y):

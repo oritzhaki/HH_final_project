@@ -7,6 +7,9 @@ import torch
 import torch
 from torch import nn
 
+
+import numpy as np
+
 class CNN(nn.Module):
     def __init__(self):
         super(CNN, self).__init__()
@@ -94,24 +97,6 @@ def evaluate_model(model, test_loader):
         print(f"Accuracy of the model on test data: {100 * correct / total}%")
 
 
-def predict_for_cells(model, cells_to_check, samples):
-    cells_with_prediction_1 = []
-    for cell in cells_to_check:
-        cell_samples = [sample for sample in samples if cell in sample[0]]
-        if cell_samples:
-            inputs, _ = zip(*[(torch.tensor(sample[1]), sample[2]) for sample in cell_samples])
-            inputs = torch.stack(inputs)
-            with torch.no_grad():
-                outputs = model(inputs.float())
-                _, predicted = torch.max(outputs.data, 1)
-                
-                # Add cell to list if prediction is 1
-                if predicted.item() == 1:
-                    cells_with_prediction_1.append(cell)
-        else:
-            print(f"Cell {cell} not found in samples.")
-    return cells_with_prediction_1
-
 
 
 def CNN_train(samples):
@@ -123,15 +108,18 @@ def CNN_train(samples):
     evaluate_model(model, test_loader)
     return model
 
-def get_predicted_cells_path(model, samples, cells_to_check):
-    wanted_cells = predict_for_cells(model, cells_to_check, samples)
-    
-    wanted_cells_paths = []
-    for cell in wanted_cells:
-        for sample in samples:
-            path = sample[0]
-            if cell in path.split('/'):  # Assuming the cell number is a part of the path
-                wanted_cells_paths.append(path)
-    print(wanted_cells_paths)
-    return wanted_cells_paths
-    
+def CNN_predict(model, cell, path):
+    # convert numpy array to PyTorch tensor and add batch dimension
+    cell_tensor = torch.tensor(cell[1]).unsqueeze(0).float()
+
+    outputs = model(cell_tensor)
+
+    predicted_class_index = torch.argmax(outputs[0]).item()
+
+    class_labels = {0: "N", 1: "MH"}
+
+    MP_path = path + f"/{cell[0]}/{cell[0]}_sample.csv"
+
+    return class_labels[predicted_class_index], MP_path
+
+

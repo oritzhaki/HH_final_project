@@ -39,7 +39,7 @@ problem.params_to_optimize = {
 
 # GA Parameters
 params = structure()
-params.maxit = 500
+params.maxit = 50
 params.npop = 70
 params.beta = 1
 params.pc = 2
@@ -74,7 +74,7 @@ row = {
 
 # Extract the path details
 path_parts = args.cell_path.split('/')
-y_y, z_c, x, _ = path_parts
+_, y_y, z_c, x, _ = path_parts
 
 # Create the directories if they don't exist
 os.makedirs(f'Results/{y_y}/{z_c}/{x}', exist_ok=True)

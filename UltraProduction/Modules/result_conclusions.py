@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 import seaborn as sns
 import os
-from Modules.ConclusionsFunction.parsers import  get_result_path, process_data
+from Modules.ConclusionsFunction.parsers import  get_result_path, process_data, get_relevant_path
 from Modules.ConclusionsFunction.sorter import sort
 from Modules.ConclusionsFunction.spliter import split_good_bad_runs
 from Modules.ConclusionsFunction.calc_mean_median import calc_mean_median
@@ -21,6 +21,7 @@ from Modules.ConclusionsFunction.line_match import line_match
 def run(data_path, save_size=1, return_size=1):
     
     try:
+        data_path = get_relevant_path(data_path)
         data_path = data_path.replace("sample", "result")
         result_path = get_result_path(data_path)
         sort(data_path, result_path)
