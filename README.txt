@@ -1,1 +1,1 @@
-This repository includes all codes we worked on throughout the entire project including the beggining of the inactivation data. The final pipeline is the UltraProduction dir including the data.
+This repository includes all codes of the final pipeline of the project (part two) that works on the rat data to find the parameters. The pipeline is run by the pipeline.py script in the UltraProduction folder.
